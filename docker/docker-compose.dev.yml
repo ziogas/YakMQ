@@ -1,0 +1,22 @@
+name: yakmq-dev
+services:
+  api:
+    build:
+      target: dev_api
+    env_file:
+      - path: ../.env
+        required: true
+      - path: ../.env.development
+        required: false
+    volumes:
+      - ../src:/home/node/www/src
+  workers:
+    build:
+      target: dev_workers
+    env_file:
+      - path: ../.env
+        required: true
+      - path: ../.env.development
+        required: false
+    volumes:
+      - ../src:/home/node/www/src

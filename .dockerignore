@@ -1,0 +1,6 @@
+.git
+.yarn
+.vscode
+dist
+docker
+node_modules

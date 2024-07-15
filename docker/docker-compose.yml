@@ -1,0 +1,36 @@
+name: yakmq
+services:
+  api:
+    restart: always
+    init: true
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: prod_api
+    env_file:
+      - path: ../.env
+        required: true
+      - path: ../.env.production
+        required: false
+    ports:
+      - 3000:3000
+  workers:
+    restart: always
+    init: true
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: prod_workers
+    env_file:
+      - path: ../.env
+        required: true
+      - path: ../.env.production
+        required: false
+  redis:
+    restart: always
+    image: redis:7-bookworm
+    volumes:
+      - ./volumes/redis-data:/data
+    command: redis-server --appendonly yes --maxmemory-policy noeviction
+
+
