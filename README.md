@@ -15,12 +15,22 @@ YakMQ is a boilerplate for job/task queues based on [BullMQ]. It includes a priv
 3. Update the values in the `.env` file to match your configuration.
 
 ```sh
-git clone ssh://github.com/ziogas/yakmq.git
+git clone git@github.com:ziogas/YakMQ.git
 cd yakmq
 cp .env.sample .env # don't forget to update the values
 ```
 
 You can create separate `.env` files for different environments, such as `.env.development` and `.env.production`. These environment-specific files will override and extend the settings in the main `.env` file.
+
+
+### Install the dependencies
+
+To install the dependencies, use [Yarn](https://yarnpkg.com/) with corepack enabled:
+
+```sh
+corepack enable
+yarn install
+```
 
 ### Adding Your Workers
 
