@@ -1,6 +1,9 @@
 import { SandboxedJob } from 'bullmq';
 
-export default async function processor(job: SandboxedJob) {
+// Update it with the actual job data type
+type JobData = unknown;
+
+export default async function processor(job: SandboxedJob<JobData>) {
   job.log(`job started on ${new Date().toISOString()}`);
 
   job.updateProgress(0);
