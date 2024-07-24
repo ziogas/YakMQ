@@ -27,15 +27,15 @@ FROM deps AS dev_workers
 CMD ["yarn", "tsx", "--watch", "src/workers/index.ts"]
 
 
-FROM deps as prod_build
+FROM deps AS prod_build
 RUN yarn docker-prod-prune && yarn cache clean
 COPY --chown=node:node --from=dist /home/node/www/dist /home/node/www/dist
 
 
-FROM prod_build as prod_api
+FROM prod_build AS prod_api
 EXPOSE 3000
 CMD ["node", "dist/api/index.js"]
 
 
-FROM prod_build as prod_workers
+FROM prod_build AS prod_workers
 CMD ["node", "dist/workers/index.js"]
