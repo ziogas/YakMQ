@@ -17,7 +17,7 @@
     "dev": "concurrently --kill-others -n api,workers -c green,blue \"yarn dev:api\" \"yarn dev:workers\"",
     "dev:api": "tsx --env-file=.env --env-file=.env.development --watch src/api/index.ts",
     "dev:workers": "tsc --noEmit && tsx --env-file=.env --env-file=.env.development --watch src/workers/index.ts",
-    "test": "echo '\n\n>>> ensure you have a running redis server locally <<<\n\n' && node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js --config ./jest.config.js"
+    "test": "echo '\n\n>>> ensure you have a running redis server locally <<<\n\n' && jest"
   },
   "author": "",
   "license": "MIT",
