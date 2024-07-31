@@ -8,14 +8,13 @@ const allWorkers: Worker[] = [];
 export async function importAllWorkers() {
   const workersToLoad = await glob(`${__dirname}/*/worker.?s`);
 
-  const importedWorkerObjects = await Promise.all(workersToLoad.map((worker) => import(worker)));
+  const importedWorkerObjects = await Promise.all(workersToLoad?.map((worker) => import(worker)) || []);
 
   // Handle transpiled ES6 modules, they're nested in a "default" property
   const importedWorkers: DefaultWorkerExport[] = importedWorkerObjects.map(
     (importedWorkerObject) =>
       importedWorkerObject?.default?.default || importedWorkerObject?.default || importedWorkerObject
   );
-
   return importedWorkers;
 }
 

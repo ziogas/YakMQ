@@ -23,20 +23,12 @@ export function getRouter() {
   });
 
   queuesRouter.get('getJobs', '/:queueName', async (ctx, next) => {
-    const params = ctx.params;
-
-    if (!params?.queueName) {
-      ctx.status = 400;
-      ctx.body = { error: 'queueName is required' };
-
-      return;
-    }
-
-    const queue = await getQueueByName(params.queueName.toString());
+    const queueName = ctx.params.queueName?.trim()?.toString() || '';
+    const queue = await getQueueByName(queueName);
 
     if (!queue) {
       ctx.status = 404;
-      ctx.body = { error: `queue "${params.queueName}" not found` };
+      ctx.body = { error: `queue "${queueName}" not found` };
 
       return;
     }
@@ -47,55 +39,57 @@ export function getRouter() {
   });
 
   queuesRouter.post('createJob', '/:queueName', async (ctx, next) => {
-    const body = ctx.request.body as Record<string, unknown> | undefined;
-    const params = ctx.params;
+    const queueName = ctx.params?.queueName?.trim()?.toString();
+    const jobName = ctx.request.body?.jobName?.trim()?.toString();
+    const jobData = ctx.request.body?.jobData;
+    const jobOptions = ctx.request.body?.jobOptions;
 
-    if (!params?.queueName || !body?.jobName || !body?.jobData) {
+    if (!queueName || !jobName || !jobData) {
       ctx.status = 400;
-      ctx.body = { error: 'queueName and jobData are required' };
+      ctx.body = {
+        error: `queueName, jobName, and jobData are required. Got ${JSON.stringify({
+          queueName,
+          jobName,
+          jobData,
+        })}`,
+      };
 
       return;
     }
 
-    const queue = await getQueueByName(params.queueName.toString());
+    const queue = await getQueueByName(queueName);
 
     if (!queue) {
       ctx.status = 404;
-      ctx.body = { error: `queue "${params.queueName}" not found` };
+      ctx.body = { error: `queue "${queueName}" not found` };
 
       return;
     }
 
-    const addedJob = await queue.add(body.jobName.toString(), body.jobData, body.jobOptions || undefined);
+    const addedJob = await queue.add(jobName, jobData, jobOptions || undefined);
 
     ctx.status = 201;
     ctx.body = { message: 'Job created', job: addedJob };
   });
 
   queuesRouter.get('getJob', '/:queueName/:jobId', async (ctx, next) => {
-    const params = ctx.params;
+    const queueName = ctx.params?.queueName?.trim()?.toString() || '';
+    const jobId = ctx.params?.jobId?.trim()?.toString() || '';
 
-    if (!params?.queueName || !params?.jobId) {
-      ctx.status = 400;
-      ctx.body = { error: 'queueName and jobId are required' };
-
-      return;
-    }
-
-    const queue = await getQueueByName(params.queueName.toString());
+    const queue = await getQueueByName(queueName);
 
     if (!queue) {
       ctx.status = 404;
-      ctx.body = { error: `queue "${params.queueName}" not found` };
+      ctx.body = { error: `queue "${queueName}" not found` };
 
       return;
     }
 
-    const job = await queue.getJob(params.jobId.toString());
+    const job = await queue.getJob(jobId);
 
     if (!job) {
       ctx.status = 404;
-      ctx.body = { error: `jobId "${params.jobId}" not found` };
+      ctx.body = { error: `jobId "${jobId}" not found` };
 
       return;
     }
@@ -105,7 +99,7 @@ export function getRouter() {
 
   router.use(queuesRouter.routes(), queuesRouter.allowedMethods());
 
-  router.get('homepage', '/', (ctx, next) => {
+  router.get('homepage', '/', (ctx) => {
     ctx.body = { hello: 'world' };
   });
 
