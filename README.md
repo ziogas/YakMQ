@@ -1,3 +1,4 @@
+[![Tests][tests-shield]][tests-url]
 [![MIT License][license-shield]][license-url]
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
@@ -301,3 +302,5 @@ I will do my best to help you out!
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/arminaszukauskas
 [email]: mailto:arminas@ini.lt
+[tests-shield]: https://img.shields.io/github/actions/workflow/status/ziogas/yakmq/test.yml?branch=master&label=tests&style=for-the-badge
+[tests-url]: https://github.com/ziogas/yakmq/actions/workflows/test.yml
