@@ -5,6 +5,12 @@
 
 # YakMQ
 
+<div style="text-align:center">
+
+![YakMQ Logo][logo]
+
+</div>
+
 YakMQ is a boilerplate for job/task queues based on [BullMQ]. It includes a private API endpoint for adding jobs, integrates with [BullBoard] for monitoring, and features standardized workers. The project is Dockerized for easy deployment.
 
 ## Getting Started
@@ -304,3 +310,4 @@ I will do my best to help you out!
 [email]: mailto:arminas@ini.lt
 [tests-shield]: https://img.shields.io/github/actions/workflow/status/ziogas/yakmq/test.yml?branch=master&label=tests&style=for-the-badge
 [tests-url]: https://github.com/ziogas/yakmq/actions/workflows/test.yml
+[logo]: /yak-256.png
